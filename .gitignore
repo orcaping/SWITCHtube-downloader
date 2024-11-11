@@ -2,3 +2,4 @@
 .env
 cookies.pkl
 /__pycache__
+/venv
