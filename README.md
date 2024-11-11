@@ -16,7 +16,7 @@ Please use this tool responsibly and ensure that any downloads comply with relev
 
 **NOTE**: If you are uncertain about the legality of downloading specific content, please **consult the terms of service** for that content or seek legal advice.
 
----
+
 
 ## Installation
 
@@ -50,9 +50,9 @@ pip install -r requirements.txt
 
 This will install all necessary dependencies listed in the `requirements.txt` file.
 
----
 
-## Configuration
+
+## Configuration (optional)
 
 This project requires certain environment variables to be set up in a `.env` file to function correctly. Create a `.env` file in the root directory of the project and include the following information:
 
@@ -63,23 +63,50 @@ PASSWORD=your_password
 ```
 Ensure that your `.env` file is securely stored and not shared publicly. You may want to add `.env` to your `.gitignore` file to prevent it from being committed to version control.
 
----
 
 ## Usage
 
-This tool uses command-line arguments to specify the video or folder URL to download. The following argument is supported:
+This tool uses command-line arguments to specify the video or folder URL to download, as well as user credentials and configuration options. The following arguments are supported:
 
-- `url` (required): The URL of the video or folder you want to download.
+### Arguments:
+
+- **`url`** (required): The URL of the video or folder you want to download.
+- **`-u`, `--user`** (optional): The username required for authentication (if the service requires login).
+- **`-p`, `--password`** (optional): The password for the specified username. If the `-u` (username) argument is provided, the `-p` (password) argument is required.
+- **`-s`, `--school`** (optional): The university or school name for matching. This is required if the `-u` (username) is provided.
+- **`-d`, `--dir`** (optional, default: `downloads`): The directory where the videos will be downloaded. If not provided, the default directory is `downloads`.
+- **`--debug`** (optional): Run the browser in non-headless mode, showing the browser window (useful for debugging).
 
 ### Example Usage
 
-To download a video or folder, run:
+To download a video or folder, run the following command with the required URL:
 
 ```bash
-python script_name.py <url>
+python main.py <url>
 ```
 
-Replace `<url>` with the actual URL of the video or folder you wish to download. 
+**Example 1**: Download a video with no user credentials (headless mode enabled by default):
 
+```bash
+python main.py https://example.com/video
+```
+
+**Example 2**: Download a video with user credentials provided via CLI:
+
+```bash
+python main.py https://example.com/video -u your_username -p your_password -s your_school
+```
+
+**Example 3**: Download a video with a specific directory and enabling the browser window:
+
+```bash
+python main.py https://example.com/video -d /path/to/downloads --debug
+```
+
+### Key Notes:
+- values for `--user`, `--password` and `--school`can be set using the `.env` file as described above.
+
+- **`--user` and `--password`**: If you provide a username using `--user`, you **must** also provide the corresponding password using `--password`.
+- **`--school`**: This argument should be used along with `--user` to specify the associated university or school name for authentication.
 
 

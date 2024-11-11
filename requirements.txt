@@ -7,3 +7,4 @@ python-dotenv
 argparse
 requests
 tqdm
+sys
