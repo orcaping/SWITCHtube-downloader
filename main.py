@@ -65,6 +65,6 @@ def main(url, output_folder="downloads"):
         driver.quit()
 
 # Example usage
-# if __name__ == "__main__":
-#     video_page_url = "https://tube.switch.ch/videos/uxbITIynrz"
-#     main(video_page_url)
+if __name__ == "__main__":
+    video_page_url = "https://tube.switch.ch/videos/uxbITIynrz"
+    main(video_page_url)
