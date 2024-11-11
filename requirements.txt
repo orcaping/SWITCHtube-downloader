@@ -6,3 +6,4 @@ authentication
 python-dotenv
 argparse
 requests
+tqdm
