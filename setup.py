@@ -13,8 +13,7 @@ setup(
         "python-dotenv",
         "argparse",
         "requests",
-        "tqdm",
-        "sys"
+        "tqdm"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
