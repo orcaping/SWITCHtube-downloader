@@ -82,8 +82,13 @@ if __name__ == "__main__":
     )
     parser.add_argument("url", help="URL of the video or folder to download.")
     parser.add_argument(
+        '-d', '--dir',
+        default="downloads",
+        help="directory to download videos"
+    )
+    parser.add_argument(
         '--debug', action='store_true',
         help="disable headless mode showing browser window"
     )
     args = parser.parse_args()
-    main(args.url, args.debug)
+    main(args.url, args.debug, args.dir)

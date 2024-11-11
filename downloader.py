@@ -21,8 +21,7 @@ def fetch_video_url(driver):
         return None
 
 
-# WIP
-def folder_downloader(folder_url, driver, output_folder="downloads"):
+def folder_downloader(folder_url, driver):
     """ Downloads all video files in a specified folder"""
 
     video_hrefs = []
@@ -46,7 +45,7 @@ def folder_downloader(folder_url, driver, output_folder="downloads"):
         driver.get(folder_url)
 
 
-def download_video_file(video_url, driver, output_folder="downloads"):
+def download_video_file(video_url, driver, output_folder):
     """Downloads the video file from the given URL."""
 
     save_cookies(driver)  # Save cookies for the requests session
