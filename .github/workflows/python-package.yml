@@ -3,7 +3,7 @@ name: Python Package
 on:
   push:
     tags:
-      - 'v*.*.*' 
+      - 'v*' 
 jobs:
   build:
     runs-on: ubuntu-latest
