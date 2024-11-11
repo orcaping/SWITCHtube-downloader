@@ -20,20 +20,22 @@ def load_environment_variables():
         print("Error: Missing one or more environment variables.")
     return username, password, school
 
-def setup_selenium_driver():
+def setup_selenium_driver(is_verbose):
     """Sets up a headless Selenium WebDriver."""
     chrome_options = Options()
     chrome_options.add_argument("--disable-gpu")
+    if not is_verbose:
+        chrome_options.add_argument("--headless")
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
-def main(url, output_folder="downloads"):
+def main(url, is_verbose=False, output_folder="downloads"):
     """Main function to execute the video download process."""
     username, password, school = load_environment_variables()
 
     # Set up Selenium WebDriver
-    driver = setup_selenium_driver()
+    driver = setup_selenium_driver(is_verbose)
 
     try:
         driver.get(url)  # Open initial page
@@ -66,6 +68,7 @@ def main(url, output_folder="downloads"):
             print("Invalid URL. Exiting.")
             return
     finally:
+        print("quit driver")
         driver.quit() 
 
 # Example usage
@@ -73,5 +76,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Download videos from SWITCHtube.")
     parser.add_argument("url", help="URL of the video or folder to download.")
+    parser.add_argument('-v', '--verbose', action='store_true', help="disable headless mode showing broswer window")
     args = parser.parse_args()
-    main(args.url)    
+    main(args.url, args.verbose)    
