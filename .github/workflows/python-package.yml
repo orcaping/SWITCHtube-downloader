@@ -38,7 +38,7 @@ jobs:
           files: dist/*
 
       - name: Publish to PyPI (optional)
-        if: github.ref == 'refs/tags/v*.*.*'
+        if: github.ref == 'refs/tags/v*'
         run: |
           python -m pip install --upgrade setuptools wheel twine
           twine upload dist/* -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
