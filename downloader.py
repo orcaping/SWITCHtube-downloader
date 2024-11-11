@@ -3,6 +3,7 @@ import requests
 import pickle
 from selenium.webdriver.common.by import By
 from cookies import load_cookies, save_cookies
+from tqdm import tqdm
 
 
 def fetch_video_url(driver):
@@ -24,7 +25,7 @@ def folder_downloader(folder_url, driver, output_folder="downloads"):
 
     video_hrefs = []
     video_divs = driver.find_elements(By.XPATH, "//turbo-frame[@id='videos-items']//div[starts-with(@id, 'video_')]")
-    
+
     for video in video_divs:
         a_element = video.find_element(By.TAG_NAME, 'a')
         href = a_element.get_attribute('href')
@@ -49,7 +50,7 @@ def download_video_file(video_url, driver, output_folder="downloads"):
     parent_dir = driver.find_element(By.XPATH, "//div[@class='title-with-menu']//div[@class='headers']//h2/a").text
     video_parentdir_name = parent_dir.replace(" ", "_")
     os.makedirs(os.path.join(output_folder, video_parentdir_name), exist_ok=True)
-    video_filename = video_name.replace(", ", "-") + ".mp4"
+    video_filename = video_name.replace(", ", "-").replace(" ", "_") + ".mp4"
     video_path = os.path.join(output_folder, video_parentdir_name, video_filename)
 
     if os.path.exists(video_path):
@@ -68,9 +69,19 @@ def download_video_file(video_url, driver, output_folder="downloads"):
     response = session.get(video_url, stream=True)
 
     if response.status_code == 200:
-        with open(video_path, "wb") as f:
+        total_size = int(response.headers.get("content-length", 0))
+
+        with open(video_path, "wb") as f, tqdm(
+            desc="Downloading",
+            total=total_size,
+            unit="B",
+            unit_scale=True,
+            unit_divisor=1024,
+        ) as progress_bar:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
-        print(f"Video downloaded successfully: {video_path}")
+                progress_bar.update(len(chunk))
+
+        print(f"\nVideo downloaded successfully: {video_path}")
     else:
         print(f"Failed to download video, status code: {response.status_code}")
