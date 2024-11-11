@@ -38,20 +38,20 @@ def main(url, output_folder="downloads"):
     try:
         driver.get(url)  # Open initial page
 
-        # Load cookies if available and attempt access
-        if load_cookies(driver):
-            driver.get(url)
-            if is_authenticated(driver):
-                print("Authenticated with cookies.")
-            else:
-                print("Cookies invalid, proceeding with login...")
-                authenticate_user(driver, url, username, password, school)
-                save_cookies(driver)  # Save cookies after authentication
-        else:
-            # If no cookies found, authenticate
-            print("No cookies found, proceeding with login...")
-            authenticate_user(driver, url, username, password, school)
-            save_cookies(driver)  # Save cookies after authentication
+        # # Load cookies if available and attempt access
+        # if load_cookies(driver):
+        #     driver.get(url)
+        #     if is_authenticated(driver):
+        #         print("Authenticated with cookies.")
+        #     else:
+        #         print("Cookies invalid, proceeding with login...")
+        #         authenticate_user(driver, url, username, password, school)
+        #         save_cookies(driver)  # Save cookies after authentication
+        # else:
+        # If no cookies found, authenticate
+        # print("No cookies found, proceeding with login...")
+        authenticate_user(driver, url, username, password, school)
+        # save_cookies(driver)  # Save cookies after authentication
 
         if "channels" in url:
             folder_downloader(url, driver)
@@ -70,5 +70,8 @@ def main(url, output_folder="downloads"):
 
 # Example usage
 if __name__ == "__main__":
-    video_page_url = "https://tube.switch.ch/channels/EZMg81ORVg"
-    main(video_page_url)
+
+    parser = argparse.ArgumentParser(description="Download videos from SWITCHtube.")
+    parser.add_argument("url", help="URL of the video or folder to download.")
+    args = parser.parse_args()
+    main(args.url)    

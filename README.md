@@ -65,3 +65,21 @@ Ensure that your `.env` file is securely stored and not shared publicly. You may
 
 ---
 
+## Usage
+
+This tool uses command-line arguments to specify the video or folder URL to download. The following argument is supported:
+
+- `url` (required): The URL of the video or folder you want to download.
+
+### Example Usage
+
+To download a video or folder, run:
+
+```bash
+python script_name.py <url>
+```
+
+Replace `<url>` with the actual URL of the video or folder you wish to download. 
+
+
+

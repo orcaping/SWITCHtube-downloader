@@ -33,6 +33,9 @@ def folder_downloader(folder_url, driver, output_folder="downloads"):
     for href in video_hrefs:
         driver.get(href)
         video_url = fetch_video_url(driver)
+        if os.path.exists(video_url):
+            print(f"Video already exists: {video_url}")
+            continue
         download_video_file(video_url, driver)
         driver.get(folder_url)
 
@@ -48,6 +51,10 @@ def download_video_file(video_url, driver, output_folder="downloads"):
     os.makedirs(os.path.join(output_folder, video_parentdir_name), exist_ok=True)
     video_filename = video_name.replace(", ", "-") + ".mp4"
     video_path = os.path.join(output_folder, video_parentdir_name, video_filename)
+
+    if os.path.exists(video_path):
+        print(f"Video already exists: {video_path}")
+        return
 
     session = requests.Session()
 
