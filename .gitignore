@@ -1,5 +1,14 @@
 /downloads
 .env
 cookies.pkl
-/__pycache__
 /venv
+
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+dist/
+build/
+*.egg-info/
