@@ -1,0 +1,8 @@
+selenium
+webdriver-manager
+cookies
+downloader
+authentication
+python-dotenv
+argparse
+requests
