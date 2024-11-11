@@ -1,13 +1,13 @@
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from cookies import load_cookies, save_cookies, is_authenticated
+from webdriver_manager.chrome import ChromeDriverManager  # type: ignore
+from selenium import webdriver  # type: ignore
+from selenium.webdriver.chrome.options import Options  # type: ignore
+from selenium.webdriver.chrome.service import Service  # type: ignore
+# from cookies import load_cookies, save_cookies, is_authenticated
 from downloader import fetch_video_url, download_video_file, folder_downloader
 from authentication import authenticate_user
 import os
 import argparse
-from dotenv import load_dotenv
+from dotenv import load_dotenv  # type: ignore
 
 
 def load_environment_variables():
@@ -20,22 +20,24 @@ def load_environment_variables():
         print("Error: Missing one or more environment variables.")
     return username, password, school
 
-def setup_selenium_driver(is_verbose):
+
+def setup_selenium_driver(debug):
     """Sets up a headless Selenium WebDriver."""
     chrome_options = Options()
     chrome_options.add_argument("--disable-gpu")
-    if not is_verbose:
+    if not debug:
         chrome_options.add_argument("--headless")
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
     return driver
 
-def main(url, is_verbose=False, output_folder="downloads"):
+
+def main(url, debug=False, output_folder="downloads"):
     """Main function to execute the video download process."""
     username, password, school = load_environment_variables()
 
     # Set up Selenium WebDriver
-    driver = setup_selenium_driver(is_verbose)
+    driver = setup_selenium_driver(debug)
 
     try:
         driver.get(url)  # Open initial page
@@ -69,13 +71,19 @@ def main(url, is_verbose=False, output_folder="downloads"):
             return
     finally:
         print("quit driver")
-        driver.quit() 
+        driver.quit()
+
 
 # Example usage
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Download videos from SWITCHtube.")
+    parser = argparse.ArgumentParser(
+        description="Download videos from SWITCHtube."
+    )
     parser.add_argument("url", help="URL of the video or folder to download.")
-    parser.add_argument('-v', '--verbose', action='store_true', help="disable headless mode showing broswer window")
+    parser.add_argument(
+        '--debug', action='store_true',
+        help="disable headless mode showing browser window"
+    )
     args = parser.parse_args()
-    main(args.url, args.verbose)    
+    main(args.url, args.debug)

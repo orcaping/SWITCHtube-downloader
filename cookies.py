@@ -1,6 +1,7 @@
 import os
 import pickle
-from selenium.webdriver.common.by import By
+from selenium.webdriver.common.by import By  # type: ignore
+
 
 def save_cookies(driver, filename="cookies.pkl"):
     """Save all cookies to a file."""
@@ -8,13 +9,14 @@ def save_cookies(driver, filename="cookies.pkl"):
         pickle.dump(driver.get_cookies(), f)
     print("Cookies saved.")
 
+
 def load_cookies(driver, filename="cookies.pkl"):
     """Loads cookies into the driver."""
     if os.path.exists(filename):
         with open(filename, "rb") as f:
             cookies = pickle.load(f)
             for cookie in cookies:
-                # Selenium requires a domain without a leading dot, so strip it if present
+                # Selenium requires domain without leading dot
                 cookie['domain'] = cookie['domain'].lstrip(".")
                 try:
                     driver.add_cookie(cookie)
@@ -25,10 +27,11 @@ def load_cookies(driver, filename="cookies.pkl"):
     print("No cookies found.")
     return False
 
+
 def is_authenticated(driver):
-    """Checks if the user is authenticated by looking for specific page elements."""
+    """Check if user is authenticated by looking for specific page elements."""
     try:
         driver.find_element(By.ID, "userIdPSelection_iddtext")
         return False  # If this element is present, authentication is required
-    except:
+    except Exception:
         return True
