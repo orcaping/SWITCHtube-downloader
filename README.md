@@ -1,4 +1,18 @@
-# switchtube-downloader
+# SWITCHtube-downloader
+A Python cli-tool to download videos from SWITCHtube. Supports full organization / folder download and cookie caching. Great for automating video downloads to study from anywhere.
+
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/panmona/switchtube-dl/issues)
+
+
+## Features
+- Download videos from SWITCHtube.
+- cli authentication with cookie caching.
+- support for organization / channels and direct video download.
+
+## Future Features
+- asynchronous downloads.
+- interactive selection of channels / lectures in organization and channels.
+
 
 ## Disclaimer
 

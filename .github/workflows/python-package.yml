@@ -34,7 +34,7 @@ jobs:
           files: dist/*
 
       - name: Publish to PyPI
-        if: startsWith(github.ref, 'refs/tags/v')  # Only run this if the tag starts with 'v'
+        if: startsWith(github.ref, 'refs/tags/v')
         env:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
