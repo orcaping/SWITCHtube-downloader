@@ -21,9 +21,6 @@ def fetch_video_url(driver):
 # WIP
 def folder_downloader(folder_url, driver, output_folder="downloads"):
     """ Downloads all video files in a specified folder"""
-    save_cookies(driver)
-
-    os.makedir(folder_url.replace(" ", "_"))
 
     video_hrefs = []
     video_divs = driver.find_elements(By.XPATH, "//turbo-frame[@id='videos-items']//div[starts-with(@id, 'video_')]")
@@ -37,8 +34,7 @@ def folder_downloader(folder_url, driver, output_folder="downloads"):
         driver.get(href)
         video_url = fetch_video_url(driver)
         download_video_file(video_url, driver)
-
-
+        driver.get(folder_url)
 
 
 def download_video_file(video_url, driver, output_folder="downloads"):

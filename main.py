@@ -1,9 +1,9 @@
-from webdriver_manager.chrome import ChromeDriverManager  # Add this import at the top
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from cookies import load_cookies, save_cookies, is_authenticated
-from downloader import fetch_video_url, download_video_file
+from downloader import fetch_video_url, download_video_file, folder_downloader
 from authentication import authenticate_user
 import os
 import argparse
@@ -53,18 +53,22 @@ def main(url, output_folder="downloads"):
             authenticate_user(driver, url, username, password, school)
             save_cookies(driver)  # Save cookies after authentication
 
-        # Fetch the video URL
-        video_url = fetch_video_url(driver)
+        if "channels" in url:
+            folder_downloader(url, driver)
+        elif "videos" in url:
+            video_url = fetch_video_url(driver)
 
-        # Download the video file if URL was found
-        if video_url:
-            download_video_file(video_url, driver, output_folder)
+            if video_url:
+                download_video_file(video_url, driver, output_folder)
+            else:
+                print("Video URL not found. Exiting.")
         else:
-            print("Video URL not found. Exiting.")
+            print("Invalid URL. Exiting.")
+            return
     finally:
-        driver.quit()
+        driver.quit() 
 
 # Example usage
 if __name__ == "__main__":
-    video_page_url = "https://tube.switch.ch/videos/uxbITIynrz"
+    video_page_url = "https://tube.switch.ch/channels/EZMg81ORVg"
     main(video_page_url)
