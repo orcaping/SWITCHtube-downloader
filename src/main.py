@@ -67,7 +67,7 @@ def main(
         # save_cookies(driver)  # Save cookies after authentication
 
         if "channels" in url:
-            folder_downloader(url, driver)
+            folder_downloader(url, driver, output_folder)
         elif "videos" in url:
             video_url = fetch_video_url(driver)
 

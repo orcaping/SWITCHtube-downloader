@@ -21,7 +21,7 @@ def fetch_video_url(driver):
         return None
 
 
-def folder_downloader(folder_url, driver):
+def folder_downloader(folder_url, driver, output_folder):
     """ Downloads all video files in a specified folder"""
 
     video_hrefs = []
@@ -41,7 +41,7 @@ def folder_downloader(folder_url, driver):
         if os.path.exists(video_url):
             print(f"Video already exists: {video_url}")
             continue
-        download_video_file(video_url, driver)
+        download_video_file(video_url, driver, output_folder)
         driver.get(folder_url)
 
 
